@@ -4,11 +4,11 @@
 
 ```ts
 interface Animal {
-	live(): void;
+    live(): void;
 }
 
 interface Dog extends Animal {
-	woof(): void;
+    woof(): void;
 }
 
 type Example1 = Dog extends Animal ? number : string; // type Example1 = number
@@ -30,18 +30,18 @@ SomeType extends OtherType ? TrueType : FalseType;
 
 ```ts
 interface IdLabel {
-	id: number /* некоторые поля */;
+    id: number /* некоторые поля */;
 }
 
 interface NameLabel {
-	name: string /* другие поля */;
+    name: string /* другие поля */;
 }
 
 function createLabel(id: number): IdLabel;
 function createLabel(name: string): NameLabel;
 function createLabel(nameOrId: string | number): IdLabel | NameLabel;
 function createLabel(nameOrId: string | number): IdLabel | NameLabel {
-	throw "unimplemented";
+    throw "unimplemented";
 }
 ```
 
@@ -54,15 +54,15 @@ function createLabel(nameOrId: string | number): IdLabel | NameLabel {
 
 ```ts
 type NameOrId<T extends number | string> = T extends number
-	? IdLabel
-	: NameLabel;
+    ? IdLabel
+    : NameLabel;
 ```
 
 Затем мы можем использовать этот условный тип, чтобы упростить наши перегрузки вплоть до одной функции без перегрузок.
 
 ```ts
 function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {
-	throw "unimplemented";
+    throw "unimplemented";
 }
 
 let a = createLabel("typescript"); // let a: NameLabel
@@ -88,7 +88,7 @@ type MessageOf<T> = T["message"]; // Тип '"message"' нельзя испол�
 type MessageOf<T extends { message: unknown }> = T["message"];
 
 interface Email {
-	message: string;
+    message: string;
 }
 
 type EmailMessageContents = MessageOf<Email>; // type EmailMessageContents = string
@@ -100,11 +100,11 @@ type EmailMessageContents = MessageOf<Email>; // type EmailMessageContents = str
 type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
 
 interface Email {
-	message: string;
+    message: string;
 }
 
 interface Dog {
-	bark(): void;
+    bark(): void;
 }
 
 type EmailMessageContents = MessageOf<Email>; // type EmailMessageContents = string
@@ -144,9 +144,9 @@ type Flatten<Type> = Type extends Array<infer Item> ? Item : Type;
 
 ```ts
 type GetReturnType<Type> = Type extends (...args: never[]) => infer Return
-	? Return
-	: never;
-	
+    ? Return
+    : never;
+    
 type Num = GetReturnType<() => number>; // type Num = number
 
 type Str = GetReturnType<(x: string) => string>; // type Str = string

@@ -23,21 +23,21 @@ type C = number | boolean
 
 ```ts
 interface Todo {
-	title: string;
-	description: string;
+    title: string;
+    description: string;
 }
 
 function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
-	return { ...todo, ...fieldsToUpdate };
+    return { ...todo, ...fieldsToUpdate };
 }
 
 const todo1 = {
-	title: "organize desk",
-	description: "clear clutter",
+    title: "organize desk",
+    description: "clear clutter",
 };
 
 const todo2 = updateTodo(todo1, {
-	description: "throw out trash",
+    description: "throw out trash",
 });
 ```
 
@@ -54,8 +54,8 @@ type Partial<T> = {
 
 ```ts
 interface Props {
-	a?: number;
-	b?: string;
+    a?: number;
+    b?: string;
 }
 
 const obj: Props = { a: 5 }; 
@@ -77,11 +77,11 @@ type Required<T> = {
 
 ```ts
 interface Todo {
-	title: string;
+    title: string;
 }
 
 const todo: Readonly<Todo> = {
-	title: "Delete inactive users",
+    title: "Delete inactive users",
 };
 
 todo.title = "Hello";
@@ -109,16 +109,16 @@ function freeze<Type>(obj: Type): Readonly<Type>;
 
 ```ts
 interface CatInfo {
-	age: number;
-	breed: string;
+    age: number;
+    breed: string;
 }
 
 type CatName = "miffy" | "boris" | "mordred";
 
 const cats: Record<CatName, CatInfo> = {
-	miffy: { age: 10, breed: "Persian" },
-	boris: { age: 5, breed: "Maine Coon" },
-	mordred: { age: 16, breed: "British Shorthair" },
+    miffy: { age: 10, breed: "Persian" },
+    boris: { age: 5, breed: "Maine Coon" },
+    mordred: { age: 16, breed: "British Shorthair" },
 };
 
 cats.boris; // const cats: Record<CatName, CatInfo>
@@ -137,16 +137,16 @@ type Record<K extends keyof any, T> = {
 
 ```ts
 interface Todo {
-	title: string;
-	description: string;
-	completed: boolean;
+    title: string;
+    description: string;
+    completed: boolean;
 }
 
 type TodoPreview = Pick<Todo, "title" | "completed">;
 
 const todo: TodoPreview = {
-	title: "Clean room",
-	completed: false,
+    title: "Clean room",
+    completed: false,
 };
 
 todo; // const todo: TodoPreview
@@ -165,18 +165,18 @@ type Pick<T, K extends keyof T> = {
 
 ```ts
 interface Todo {
-	title: string;
-	description: string;
-	completed: boolean;
-	createdAt: number;
+    title: string;
+    description: string;
+    completed: boolean;
+    createdAt: number;
 }
 
 type TodoPreview = Omit<Todo, "description">;
 
 const todo: TodoPreview = {
-	title: "Clean room",
-	completed: false,
-	createdAt: 1615544252770,
+    title: "Clean room",
+    completed: false,
+    createdAt: 1615544252770,
 };
 
 todo;
@@ -184,8 +184,8 @@ todo;
 const todo: TodoPreview type TodoInfo = Omit<Todo, "completed" | "createdAt">;
 
 const todoInfo: TodoInfo = {
-	title: "Pick up kids",
-	description: "Kindergarten closes at 5pm",
+    title: "Pick up kids",
+    description: "Kindergarten closes at 5pm",
 };
 
 todoInfo; // const todoInfo: TodoInfo
@@ -247,19 +247,19 @@ T1 = Parameters<(s: string) => void>; // type T1 = [s: string]
 type T2 = Parameters<<T>(arg: T) => T>; // type T2 = [arg: unknown]
 
 type T3 = Parameters<typeof f1>; // type T3 = [arg: {
-								 //    a: number;
-							     //    b: string;
-								 // }]
+                                 //    a: number;
+                                 //    b: string;
+                                 // }]
 
 type T4 = Parameters<any>; // type T4 = unknown[]
-					 
+                     
 type T5 = Parameters<never>; // type T5 = never
-					 
+                     
 type T6 = Parameters<string>; // Тип 'string' не удовлетворяет ограничению '(...args: any) => any'. type T6 = never
-					 
+                     
 type T7 = Parameters<Function>; // Тип 'Function' не удовлетворяет ограничению '(...args: any) => any'.
-								// Тип 'Function' не соответствует сигнатуре '(...args: any): any'.
-							    // type T7 = never
+                                // Тип 'Function' не соответствует сигнатуре '(...args: any): any'.
+                                // type T7 = never
 ```
 
 ```ts
@@ -281,8 +281,8 @@ type T2 = ConstructorParameters<RegExpConstructor>; // type T2 = [pattern: strin
 type T3 = ConstructorParameters<any>; // type T3 = unknown[]
 
 type T4 = ConstructorParameters<Function>; // Тип 'Function' не удовлетворяет ограничению 'abstract new (...args: any) => any'.
-										   // Тип 'Function' не соответствует сигнатуре 'new (...args: any): any'.
-										   // type T4 = never
+                                           // Тип 'Function' не соответствует сигнатуре 'new (...args: any): any'.
+                                           // type T4 = never
 ```
 
 ```ts
@@ -306,20 +306,20 @@ type T2 = ReturnType<<T>() => T>; // type T2 = unknown
 type T3 = ReturnType<<T extends U, U extends number[]>() => T>; // type T3 = number[]
 
 type T4 = ReturnType<typeof f1>; // type T4 = {
-							     //     a: number;
-							     //     b: string;
-								 // }
+                                 //     a: number;
+                                 //     b: string;
+                                 // }
 
 type T5 = ReturnType<any>; // type T5 = any
-					 
+                     
 type T6 = ReturnType<never>; // type T6 = never
-					 
+                     
 type T7 = ReturnType<string>; // Тип 'string' не удовлетворяет ограничению '(...args: any) => any'.
-							  // type T7 = any
+                              // type T7 = any
      
 type T8 = ReturnType<Function>; // Тип 'Function' не удовлетворяет ограничению '(...args: any) => any'.
-							    // Тип 'Function' не соответствует сигнатуре '(...args: any): any'.
-						        // type T8 = any
+                                // Тип 'Function' не соответствует сигнатуре '(...args: any): any'.
+                                // type T8 = any
 ```
 
 ```TypeScript
@@ -333,22 +333,22 @@ type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => i
 
 ```ts
 class C {
-	x = 0;
-	y = 0;
+    x = 0;
+    y = 0;
 }
 
 type T0 = InstanceType<typeof C>; // type T0 = C
-					   
+                       
 type T1 = InstanceType<any>; // type T1 = any
-					   
+                       
 type T2 = InstanceType<never>; // type T2 = never
-					   
+                       
 type T3 = InstanceType<string>; // Тип 'string' не удовлетворяет ограничению 'abstract new (...args: any) => any'.
-								// type T3 = any
-					   
+                                // type T3 = any
+                       
 type T4 = InstanceType<Function>; // Тип 'Function' не удовлетворяет ограничению 'abstract new (...args: any) => any'.
-								  // Тип 'Function' не соответствует сигнатуре 'new (...args: any): any'.
-								  // type T4 = any
+                                  // Тип 'Function' не соответствует сигнатуре 'new (...args: any): any'.
+                                  // type T4 = any
 ```
 
 ```TypeScript
@@ -362,11 +362,11 @@ type InstanceType<T extends abstract new (...args: any) => any> = T extends abst
 
 ```ts
 function toHex(this: Number) {
-	return this.toString(16);
+    return this.toString(16);
 }
 
 function numberToString(n: ThisParameterType<typeof toHex>) {
-	return toHex.apply(n);
+    return toHex.apply(n);
 }
 ```
 
@@ -376,7 +376,7 @@ function numberToString(n: ThisParameterType<typeof toHex>) {
 
 ```ts
 function toHex(this: Number) {
-	return this.toString(16);
+    return this.toString(16);
 }
 
 const fiveToHex: OmitThisParameter<typeof toHex> = toHex.bind(5);
@@ -389,24 +389,24 @@ console.log(fiveToHex());
 
 ```ts
 type ObjectDescriptor<D, M> = {
-	data?: D;
-	methods?: M & ThisType<D & M>; // Тип 'this' в методах - D & M
+    data?: D;
+    methods?: M & ThisType<D & M>; // Тип 'this' в методах - D & M
 };
 
 function makeObject<D, M>(desc: ObjectDescriptor<D, M>): D & M {
-	let data: object = desc.data || {};
-	let methods: object = desc.methods || {};
-	return { ...data, ...methods } as D & M;
+    let data: object = desc.data || {};
+    let methods: object = desc.methods || {};
+    return { ...data, ...methods } as D & M;
 }
 
 let obj = makeObject({
-	data: { x: 0, y: 0 },
-	methods: {
-		moveBy(dx: number, dy: number) {
-			this.x += dx; // Сильно типизировалное this
-			this.y += dy; // Сильно типизировалное this
-		},
-	},
+    data: { x: 0, y: 0 },
+    methods: {
+        moveBy(dx: number, dy: number) {
+            this.x += dx; // Сильно типизировалное this
+            this.y += dy; // Сильно типизировалное this
+        },
+    },
 });
 
 obj.x = 10;

@@ -6,12 +6,12 @@
 
 ```ts
 type OnlyBoolsAndHorses = {
-	[key: string]: boolean | Horse;
+    [key: string]: boolean | Horse;
 };
 
 const conforms: OnlyBoolsAndHorses = {
-	del: true,
-	rodney: false,
+    del: true,
+    rodney: false,
 };
 ```
 
@@ -19,7 +19,7 @@ const conforms: OnlyBoolsAndHorses = {
 
 ```ts
 type OptionsFlags<Type> = {
-	[Property in keyof Type]: boolean;
+    [Property in keyof Type]: boolean;
 };
 ```
 
@@ -27,14 +27,14 @@ type OptionsFlags<Type> = {
 
 ```ts
 type FeatureFlags = {
-	darkMode: () => void;
-	newUserProfile: () => void;
+    darkMode: () => void;
+    newUserProfile: () => void;
 };
 
 type FeatureOptions = OptionsFlags<FeatureFlags>; // type FeatureOptions = {
-												  //     darkMode: boolean;
-											      //     newUserProfile: boolean;
-												  // }
+                                                  //     darkMode: boolean;
+                                                  //     newUserProfile: boolean;
+                                                  // }
 ```
 
 ## Модификаторы сопоставления
@@ -46,37 +46,37 @@ type FeatureOptions = OptionsFlags<FeatureFlags>; // type FeatureOptions = {
 ```ts
 // Удаляет атрибуты «readonly» из свойств типа
 type CreateMutable<Type> = {
-	-readonly [Property in keyof Type]: Type[Property];
+    -readonly [Property in keyof Type]: Type[Property];
 };
 
 type LockedAccount = {
-	readonly id: string;
-	readonly name: string;
+    readonly id: string;
+    readonly name: string;
 };
 
 type UnlockedAccount = CreateMutable<LockedAccount>; // type UnlockedAccount = {
-												     //     id: string;
-												     //     name: string;
-													 // }
+                                                     //     id: string;
+                                                     //     name: string;
+                                                     // }
 ```
 
 ```ts
 // Удаляет «optional» атрибуты из свойств типа
 type Concrete<Type> = {
-	[Property in keyof Type]-?: Type[Property];
+    [Property in keyof Type]-?: Type[Property];
 };
 
 type MaybeUser = {
-	id: string;
-	name?: string;
-	age?: number;
+    id: string;
+    name?: string;
+    age?: number;
 };
 
 type User = Concrete<MaybeUser>; // type User = {
-							     //     id: string;
-							     //     name: string;
-							     //     age: number;
-								 // }
+                                 //     id: string;
+                                 //     name: string;
+                                 //     age: number;
+                                 // }
 ```
 
 ## Переназначение ключей через as
@@ -85,7 +85,7 @@ type User = Concrete<MaybeUser>; // type User = {
 
 ```ts
 type MappedTypeWithNewProperties<Type> = {
-	[Properties in keyof Type as NewKeyType]: Type[Properties]
+    [Properties in keyof Type as NewKeyType]: Type[Properties]
 }
 ```
 
@@ -93,20 +93,20 @@ type MappedTypeWithNewProperties<Type> = {
 
 ```ts
 type Getters<Type> = {
-	[Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
+    [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
 };
 
 interface Person {
-	name: string;
-	age: number;
-	location: string;
+    name: string;
+    age: number;
+    location: string;
 }
 
 type LazyPerson = Getters<Person>; // type LazyPerson = {
-								   //     getName: () => string;
-							       //     getAge: () => number;
-							       //     getLocation: () => string;
-								   // }
+                                   //     getName: () => string;
+                                   //     getAge: () => number;
+                                   //     getLocation: () => string;
+                                   // }
 ```
 
 Можно отфильтровать ключи, создав их без использования условного типа:
@@ -114,33 +114,33 @@ type LazyPerson = Getters<Person>; // type LazyPerson = {
 ```ts
 // Удалить свойство 'kind'
 type RemoveKindField<Type> = {
-	[Property in keyof Type as Exclude<Property, "kind">]: Type[Property]
+    [Property in keyof Type as Exclude<Property, "kind">]: Type[Property]
 };
 
 interface Circle {
-	kind: "circle";
-	radius: number;
+    kind: "circle";
+    radius: number;
 }
 
 type KindlessCircle = RemoveKindField<Circle>; // type KindlessCircle = {
-											   //     radius: number;
-											   // }
+                                               //     radius: number;
+                                               // }
 ```
 
 Можно сопоставить произвольные объединения, не только объединения `string | number | symbol`, но и объединения любого типа:
 
 ```ts
 type EventConfig<Events extends { kind: string }> = {
-	[E in Events as E["kind"]]: (event: E) => void;
+    [E in Events as E["kind"]]: (event: E) => void;
 }
 
 type SquareEvent = { kind: "square", x: number, y: : number };
 type CircleEvent = { kind: "circle", radius: number };
 
 type Config = EventConfig<SquareEvent | CircleEvent> // type Config = {
-												     //     square: (event: SquareEvent) => void;
-												     //     circle: (event: CircleEvent) => void;
-													 // }
+                                                     //     square: (event: SquareEvent) => void;
+                                                     //     circle: (event: CircleEvent) => void;
+                                                     // }
 ```
 
 ## Дальнейшие исследования
@@ -149,16 +149,16 @@ type Config = EventConfig<SquareEvent | CircleEvent> // type Config = {
 
 ```ts
 type ExtractPII<Type> = {
-	[Property in keyof Type]: Type[Property] extends { pii: true } ? true : false;
+    [Property in keyof Type]: Type[Property] extends { pii: true } ? true : false;
 };
 
 type DBFields = {
-	id: { format: "incrementing" };
-	name: { type: string; pii: true };
+    id: { format: "incrementing" };
+    name: { type: string; pii: true };
 };
 
 type ObjectsNeedingGDPRDeletion = ExtractPII<DBFields>; // type ObjectsNeedingGDPRDeletion = {
-													    //     id: false;
-													    //     name: true;
-														// }
+                                                        //     id: false;
+                                                        //     name: true;
+                                                        // }
 ```

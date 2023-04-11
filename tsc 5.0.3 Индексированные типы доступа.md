@@ -28,15 +28,15 @@ type I1 = Person["alve"]; // Свойство 'alve' не существует �
 
 ```ts
 const MyArray = [
-	{ name: "Alice", age: 15 },
-	{ name: "Bob", age: 23 },
-	{ name: "Eve", age: 38 },
+    { name: "Alice", age: 15 },
+    { name: "Bob", age: 23 },
+    { name: "Eve", age: 38 },
 ];
 
 type Person = typeof MyArray[number]; // type Person = {
-									  //   name: string;
-								      //   age: number;
-									  // }
+                                      //   name: string;
+                                      //   age: number;
+                                      // }
 
 type Age = typeof MyArray[number]["age"]; // type Age = number
 

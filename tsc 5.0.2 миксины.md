@@ -10,13 +10,13 @@
 
 ```ts
 class Sprite {
-	name = "";
-	x = 0;
-	y = 0;
-	
-	constructor(name: string) {
-		this.name = name;
-	}
+    name = "";
+    x = 0;
+    y = 0;
+    
+    constructor(name: string) {
+        this.name = name;
+    }
 }
 ```
 
@@ -33,17 +33,17 @@ type Constructor = new (...args: any[]) => {};
 // для изменения его с инкапсулированной private property:
 
 function Scale<TBase extends Constructor>(Base: TBase) {
-	return class Scaling extends Base {
-		// Mixins не может объявлять private/protected свойства
-	    // однако можно использовать ES2020 private поля
-	    _scale = 1;
-	    setScale(scale: number) {
-			this._scale = scale;
-		}
-		get scale(): number {
-			return this._scale;
-		}
-	};
+    return class Scaling extends Base {
+        // Mixins не может объявлять private/protected свойства
+        // однако можно использовать ES2020 private поля
+        _scale = 1;
+        setScale(scale: number) {
+            this._scale = scale;
+        }
+        get scale(): number {
+            return this._scale;
+        }
+    };
 }
 ```
 
@@ -85,14 +85,14 @@ type Loggable = GConstructor<{ print: () => void }>;
 
 ```ts
 function Jumpable<TBase extends Positionable>(Base: TBase) {
-	return class Jumpable extends Base {
-		jump() {
-			// This mixin will only work if it is passed a base
-			// class which has setPos defined because of the
-			// Positionable constraint.
-			this.setPos(0, 20);
-	    }
-	};
+    return class Jumpable extends Base {
+        jump() {
+            // This mixin will only work if it is passed a base
+            // class which has setPos defined because of the
+            // Positionable constraint.
+            this.setPos(0, 20);
+        }
+    };
 }
 ```
 
@@ -103,17 +103,17 @@ function Jumpable<TBase extends Positionable>(Base: TBase) {
 ```ts
 // Каждый миксин является традиционным классом ES
 class Jumpable {
-	jump() {}
+    jump() {}
 }
 
 class Duckable {
-	duck() {}
+    duck() {}
 }
 
 // Включая базу
 class Sprite {
-	x = 0;
-	y = 0;
+    x = 0;
+    y = 0;
 }
 
 // Затем создается интерфейс, объединяющий
@@ -129,16 +129,16 @@ console.log(player.x, player.y);
 
 // Это может жить в любом месте вашей кодовой базы:
 function applyMixins(derivedCtor: any, constructors: any[]) {
-	constructors.forEach((baseCtor) => {
-		Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
-			Object.defineProperty(
-				derivedCtor.prototype,
-				name,
-				Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
-					Object.create(null)
-			);
-		});
-	});
+    constructors.forEach((baseCtor) => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+            Object.defineProperty(
+                derivedCtor.prototype,
+                name,
+                Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
+                    Object.create(null)
+            );
+        });
+    });
 }
 ```
 
@@ -155,15 +155,15 @@ function applyMixins(derivedCtor: any, constructors: any[]) {
 ```ts
 // Функция декоратора, которая воспроизводит шаблон миксина:
 const Pausable = (target: typeof Player) => {
-	return class Pausable extends target {
-		shouldFreeze = false;
-	};
+    return class Pausable extends target {
+        shouldFreeze = false;
+    };
 };
 
 @Pausable
 class Player {
-	x = 0;  
-	y = 0;
+    x = 0;  
+    y = 0;
 }
 
 // В классе Player не объединен тип декоратора:
@@ -186,17 +186,17 @@ playerTwo.shouldFreeze;
 
 ```ts
 function base<T>() {
-	class Base {
-		static prop: T;
-	}
-	return Base;
+    class Base {
+        static prop: T;
+    }
+    return Base;
 }
 
 function derived<T>() {
-	class Derived extends base<T>() {
-		static anotherProp: T;
-	}
-	return Derived;
+    class Derived extends base<T>() {
+        static anotherProp: T;
+    }
+    return Derived;
 }
 
 class Spec extends derived<string>() {}

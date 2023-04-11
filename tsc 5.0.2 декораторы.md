@@ -18,10 +18,10 @@ tsc --target ES5 --experimentalDecorators
 
 ``` json
 {
-	"compilerOptions":
-	{
-		"target": "ES5",
-		"experimentalDecorators": true
+    "compilerOptions":
+    {
+        "target": "ES5",
+        "experimentalDecorators": true
     }
 }
 ```
@@ -34,7 +34,7 @@ tsc --target ES5 --experimentalDecorators
 
 ```ts
 function sealed(target) {
-	// сделать что-то с 'target' ...
+    // сделать что-то с 'target' ...
 }
 ```
 
@@ -46,12 +46,12 @@ function sealed(target) {
 
 ```ts
 function color(value: string) {
-	// это фабрика декораторов, она настраивает
-	// в возвращяемой функции декоратора
-	return function (target) {
-		// это декоратор
-		// сделать что-то с 'target' и 'value'...
-	};
+    // это фабрика декораторов, она настраивает
+    // в возвращяемой функции декоратора
+    return function (target) {
+        // это декоратор
+        // сделать что-то с 'target' и 'value'...
+    };
 }
 ```
 
@@ -82,23 +82,23 @@ x
 
 ```ts
 function first() {
-	console.log("first(): factory evaluated");
-	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-		console.log("first(): called");
-	};
+    console.log("first(): factory evaluated");
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        console.log("first(): called");
+    };
 }
 
 function second() {
-	console.log("second(): factory evaluated");
-	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-		console.log("second(): called");
-	};
+    console.log("second(): factory evaluated");
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        console.log("second(): called");
+    };
 }
 
 class ExampleClass {
-	@first()
-	@second()
-	method() {}
+    @first()
+    @second()
+    method() {}
 }
 ```
 
@@ -134,11 +134,11 @@ second(): called  first(): called
 ```ts
 @sealed
 class BugReport {
-	type = "report";
-	title: string;
-	constructor(t: string) {
-		this.title = t;
-	}
+    type = "report";
+    title: string;
+    constructor(t: string) {
+        this.title = t;
+    }
 }
 ```
 
@@ -146,8 +146,8 @@ class BugReport {
 
 ```ts
 function sealed(constructor: Function) {
-	Object.seal(constructor);
-	Object.seal(constructor.prototype);
+    Object.seal(constructor);
+    Object.seal(constructor.prototype);
 }
 ```
 
@@ -157,19 +157,19 @@ function sealed(constructor: Function) {
 
 ```ts
 function reportableClassDecorator<T extends { new (...args: any[]): {} }>(constructor: T) {
-	return class extends constructor {
-		reportingURL = "http://www...";
-	};
+    return class extends constructor {
+        reportingURL = "http://www...";
+    };
 }
 
 @reportableClassDecoratorclass
 BugReport {
-	type = "report";
-	title: string;
-	
-	constructor(t: string) {
-		this.title = t;
-	}
+    type = "report";
+    title: string;
+    
+    constructor(t: string) {
+        this.title = t;
+    }
 }
 
 const bug = new BugReport("Needs dark mode");
@@ -202,16 +202,16 @@ bug.reportingURL; // Свойство 'reportingURL' не существует �
 
 ```ts
 class Greeter {
-	greeting: string;
-	
-	constructor(message: string) {
-		this.greeting = message;
-	}
+    greeting: string;
+    
+    constructor(message: string) {
+        this.greeting = message;
+    }
 
-	@enumerable(false)
-	greet() {
-		return "Hello, " + this.greeting;
-	}
+    @enumerable(false)
+    greet() {
+        return "Hello, " + this.greeting;
+    }
 }
 ```
 
@@ -219,9 +219,9 @@ class Greeter {
 
 ```ts
 function enumerable(value: boolean) {
-	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-		descriptor.enumerable = value;
-	};
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        descriptor.enumerable = value;
+    };
 }
 ```
 
@@ -249,23 +249,23 @@ function enumerable(value: boolean) {
 
 ```ts
 class Point {
-	private _x: number;
-	private _y: number;
-	
-	constructor(x: number, y: number) {
-		this._x = x;
-		this._y = y;
-	}
-	
-	@configurable(false)
-	get x() {
-		return this._x;
-	}
-	
-	@configurable(false)
-	get y() {
-		return this._y;
-	}
+    private _x: number;
+    private _y: number;
+    
+    constructor(x: number, y: number) {
+        this._x = x;
+        this._y = y;
+    }
+    
+    @configurable(false)
+    get x() {
+        return this._x;
+    }
+    
+    @configurable(false)
+    get y() {
+        return this._y;
+    }
 }
 ```
 
@@ -273,9 +273,9 @@ class Point {
 
 ```ts
 function configurable(value: boolean) {
-	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-		descriptor.configurable = value;
-	};
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        descriptor.configurable = value;
+    };
 }
 ```
 
@@ -294,17 +294,17 @@ function configurable(value: boolean) {
 
 ```ts
 class Greeter {
-	@format("Hello, %s")
-	greeting: string;
-	
-	constructor(message: string) {
-		this.greeting = message;
-	}
-	
-	greet() {
-		let formatString = getFormat(this, "greeting");
-		return formatString.replace("%s", this.greeting);
-	}
+    @format("Hello, %s")
+    greeting: string;
+    
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    
+    greet() {
+        let formatString = getFormat(this, "greeting");
+        return formatString.replace("%s", this.greeting);
+    }
 }
 ```
 
@@ -316,11 +316,11 @@ import "reflect-metadata";
 const formatMetadataKey = Symbol("format");
 
 function format(formatString: string) {
-	return Reflect.metadata(formatMetadataKey, formatString);
+    return Reflect.metadata(formatMetadataKey, formatString);
 }
 
 function getFormat(target: any, propertyKey: string) {
-	return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
+    return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
 }
 ```
 
@@ -347,21 +347,21 @@ function getFormat(target: any, propertyKey: string) {
 ```ts
 
 class BugReport {
-	type = "report";
-	title: string;
-	
-	constructor(t: string) {
-		this.title = t;
-	}
-	
-	@validate
-	print(@required verbose: boolean) {
-		if (verbose) {
-			return `type: ${this.type}\ntitle: ${this.title}`;
-		} else {
-			return this.title;
-		}
-	}
+    type = "report";
+    title: string;
+    
+    constructor(t: string) {
+        this.title = t;
+    }
+    
+    @validate
+    print(@required verbose: boolean) {
+        if (verbose) {
+            return `type: ${this.type}\ntitle: ${this.title}`;
+        } else {
+            return this.title;
+        }
+    }
 }
 ```
 
@@ -374,24 +374,24 @@ import "reflect-metadata";
 const requiredMetadataKey = Symbol("required");
 
 function required(target: Object, propertyKey: string | symbol, parameterIndex: number) {
-	let existingRequiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyKey) || []; 
-	existingRequiredParameters.push(parameterIndex);
-	Reflect.defineMetadata( requiredMetadataKey, existingRequiredParameters, target, propertyKey);
+    let existingRequiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyKey) || []; 
+    existingRequiredParameters.push(parameterIndex);
+    Reflect.defineMetadata( requiredMetadataKey, existingRequiredParameters, target, propertyKey);
 }
 
 function validate(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
-	let method = descriptor.value!;
-	descriptor.value = function () {
-		let requiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyName);
-		if (requiredParameters) {
-			for (let parameterIndex of requiredParameters) {
-				if (parameterIndex >= arguments.length || arguments[parameterIndex] === undefined) {
-					throw new Error("Missing required argument.");
-				}
-			}
-		}
-		return method.apply(this, arguments);
-	};
+    let method = descriptor.value!;
+    descriptor.value = function () {
+        let requiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyName);
+        if (requiredParameters) {
+            for (let parameterIndex of requiredParameters) {
+                if (parameterIndex >= arguments.length || arguments[parameterIndex] === undefined) {
+                    throw new Error("Missing required argument.");
+                }
+            }
+        }
+        return method.apply(this, arguments);
+    };
 }
 ```
 
@@ -421,11 +421,11 @@ tsc --target ES5 --experimentalDecorators --emitDecoratorMetadata
 
 ```json
 {
-	"compilerOptions": {
-		"target": "ES5",
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true
-	}
+    "compilerOptions": {
+        "target": "ES5",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
 }
 ```
 
@@ -437,41 +437,41 @@ tsc --target ES5 --experimentalDecorators --emitDecoratorMetadata
 import "reflect-metadata";
 
 class Point {
-	constructor(public x: number, public y: number) {}
+    constructor(public x: number, public y: number) {}
 }
 
 class Line {
-	private _start: Point;
-	private _end: Point;
-	
-	@validate
-	set start(value: Point) {
-		this._start = value;
-	}
-	
-	get start() {
-		return this._start;
-	}
-	
-	@validate
-	set end(value: Point) {
-		this._end = value;
-	}
-	
-	get end() {
-		return this._end;
-	}
+    private _start: Point;
+    private _end: Point;
+    
+    @validate
+    set start(value: Point) {
+        this._start = value;
+    }
+    
+    get start() {
+        return this._start;
+    }
+    
+    @validate
+    set end(value: Point) {
+        this._end = value;
+    }
+    
+    get end() {
+        return this._end;
+    }
 }
 
 function validate<T>(target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<T>) {
-	let set = descriptor.set!;
-	descriptor.set = function (value: T) {
-		let type = Reflect.getMetadata("design:type", target, propertyKey);
-		if (!(value instanceof type)) {
-			throw new TypeError(`Invalid type, got ${typeof value} not ${type.name}.`);
-		}
-		set.call(this, value);
-	};
+    let set = descriptor.set!;
+    descriptor.set = function (value: T) {
+        let type = Reflect.getMetadata("design:type", target, propertyKey);
+        if (!(value instanceof type)) {
+            throw new TypeError(`Invalid type, got ${typeof value} not ${type.name}.`);
+        }
+        set.call(this, value);
+    };
 }
 
 const line = new Line()
@@ -488,28 +488,28 @@ line.start = new Point(0, 0)
 
 ```ts
 class Line {
-	private _start: Point;
-	private _end: Point;
-	
-	@validate
-	@Reflect.metadata("design:type", Point)
-	set start(value: Point) {
-		this._start = value;
-	}
-	
-	get start() {
-		return this._start;
-	}
-	
-	@validate
-	@Reflect.metadata("design:type", Point)
-	set end(value: Point) {
-		this._end = value;
-	}
-	
-	get end() {
-		return this._end;
-	}
+    private _start: Point;
+    private _end: Point;
+    
+    @validate
+    @Reflect.metadata("design:type", Point)
+    set start(value: Point) {
+        this._start = value;
+    }
+    
+    get start() {
+        return this._start;
+    }
+    
+    @validate
+    @Reflect.metadata("design:type", Point)
+    set end(value: Point) {
+        this._end = value;
+    }
+    
+    get end() {
+        return this._end;
+    }
 }
 ```
 

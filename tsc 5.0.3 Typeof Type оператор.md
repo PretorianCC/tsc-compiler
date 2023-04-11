@@ -26,7 +26,7 @@ type K = ReturnType<Predicate>; // type K = boolean
 
 ```ts
 function f() {
-	return { x: 10, y: 3 };
+    return { x: 10, y: 3 };
 }
 
 type P = ReturnType<f>; // 'f' ссылается на значение, но используется в качестве типа. Вы имели в виду 'typeof f'?
@@ -36,13 +36,13 @@ type P = ReturnType<f>; // 'f' ссылается на значение, но и
 
 ```ts
 function f() {
-	return { x: 10, y: 3 };
+    return { x: 10, y: 3 };
 }
 
 type P = ReturnType<typeof f>; // type P = {
-							    //   x: number;
-							    //   y: number;
-								// }
+                                //   x: number;
+                                //   y: number;
+                                // }
 ```
 
 ### Ограничения
